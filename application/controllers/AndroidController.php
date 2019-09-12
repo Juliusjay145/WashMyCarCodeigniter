@@ -53,6 +53,7 @@
 		public function get_schedule() //schedule sa station
 		{
 			$id = $this->uri->segment(3);
+			$this->db->where("status", "Vacant");
 			$data = $this->WashMyCarScheduleModel->get_schdule($id);
 			echo json_encode(array('cwschedule' => $data ));
 		}
@@ -69,6 +70,21 @@
 			$id = $this->uri->segment(3);
 			$data = $this->WashMyCarStationWashBoyModel->get_washboy($id);
 			echo json_encode(array('cwowner_washboy' => $data ));
+		}
+
+		public function get_details()
+		{
+			$id = $this->uri->segment(3);
+			$data = $this->WashMyCarSeekerBookingModel->get_seeker_details($id);
+			echo json_encode(array('cwowner_booking' => $data ));
+		}
+
+		public function get_schdule_occupied()
+		{
+			$id = $this->uri->segment(3);
+			$this->db->where("status", "Occupied");
+			$data = $this->WashMyCarScheduleModel->get_schedule_occupied($id);
+			echo json_encode(array('cwschedule' => $data ));
 		}
 
 
@@ -136,7 +152,8 @@
 				'seeker_name' => $this->input->post('seeker_name'),
 				'service_name' => $this->input->post('service_name'),
 				'washboy_name' => $this->input->post('washboy_name'),
-				'station_name' => $this->input->post('station_name')
+				'station_name' => $this->input->post('station_name'),
+				'seeker_image' => $this->input->post('seeker_image')
 			);
 
 
